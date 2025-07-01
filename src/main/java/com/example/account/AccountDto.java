@@ -20,6 +20,7 @@ public class AccountDto {
     private String nickname;
     private LocalDateTime registeredAt;
 
+
     public void log(){
         log.error("error is occurred.");
     }
