@@ -55,7 +55,7 @@ class AccountServiceTest {
         assertEquals(AccountStatus.UNREGISTERED, account.getAccountStatus());
     }
 
-    @Test // 예외 테스트
+    @Test // 예외 테스트 메세지 받아서 확인
     @DisplayName("계좌 조회 실패 - 음수로 조회")
     void testFailedToSearchAccount() {
         //given
