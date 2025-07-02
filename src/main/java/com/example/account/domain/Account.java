@@ -18,4 +18,5 @@ public class Account {
 
     @Enumerated(EnumType.STRING) //0 1,2,3이 아니라 값을 지정한 것으로 알수 있음
     private AccountStatus accountStatus;
+
 }
