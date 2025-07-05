@@ -2,25 +2,49 @@ package com.example.account.service;
 
 
 import com.example.account.domain.Account;
-import com.example.account.domain.AccountStatus;
+import com.example.account.domain.AccountUser;
+import com.example.account.exception.AccountException;
 import com.example.account.repository.AccountRepository;
+import com.example.account.repository.AccountUserRepository;
+import com.example.account.type.AccountStatus;
+import com.example.account.type.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
+import static com.example.account.type.AccountStatus.IN_USE;
+
 @Service
 @RequiredArgsConstructor //꼭 필요한 argument를 생성하는 것
 public class AccountService {
-    private final AccountRepository accountRepository; // 무조건 생성자에 들어가야 하는 갑3ㅅ
-    private String noFinal; // 이것과 다름
+    private final AccountRepository accountRepository; // 무조건 생성자에 들어가야 하는 값
+    private final AccountUserRepository accountUserRepository;
 
+    /**
+     * 사용자가 있는지 확인
+     * 계좌의 번호를 생성하고
+     * 계좌를 저자하고, 그 정보를 넘긴다.
+     */
     @Transactional
-    public void createAccount() {
-        Account account = Account.builder()
-                .accountNumber("40000")
-                .accountStatus(AccountStatus.IN_USE)
-                .build();
-        accountRepository.save(account);
+    public Account createAccount(Long userId, Long initialBalance) {
+        AccountUser accountUser = accountUserRepository.findById(userId)
+                .orElseThrow(() -> new AccountException(ErrorCode.USER_NOT_FOUND));
+
+        String newAccountNumber = accountRepository.findFirstByOrderByIdDesc()
+                .map(account -> (Integer.parseInt(account.getAccountNumber())) + 1 + "")
+                .orElse("1000000000");
+
+        return accountRepository.save(
+                Account.builder()
+                        .accountUser(accountUser)
+                        .accountStatus(IN_USE)
+                        .accountNumber(newAccountNumber)
+                        .balance(initialBalance)
+                        .registeredAt(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @Transactional
