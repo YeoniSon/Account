@@ -17,13 +17,13 @@ public class AccountController { //3layers 아키텍처로 외부에서 controll
     @PostMapping("/account")
     public CreateAccount.Response createAccount(
             @RequestBody @Valid CreateAccount.Request request
-            ) {
-        accountService.createAccount(
-                request.getUserId(),
-                request.getInitialBalance()
+    ) {
+        return CreateAccount.Response.from(
+                accountService.createAccount(
+                        request.getUserId(),
+                        request.getInitialBalance()
+                )
         );
-
-
     }
 
     @GetMapping("/get-lock")
