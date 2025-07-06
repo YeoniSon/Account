@@ -1,6 +1,8 @@
 package com.example.account.domain;
 
+import com.example.account.exception.AccountException;
 import com.example.account.type.AccountStatus;
+import com.example.account.type.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -38,4 +40,11 @@ public class Account {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    //위험할 수 있으므로 여기서 작성 하는 것이 더 안전함
+    public void useBalance(Long amount) {
+        if (amount > balance) {
+            throw new AccountException(ErrorCode.AMOUNT_EXCEED_BALANCE);
+        }
+        balance -= amount;
+    }
 }
