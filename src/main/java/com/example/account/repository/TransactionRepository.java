@@ -14,5 +14,5 @@ public interface TransactionRepository
         extends JpaRepository<Transaction, Long> {
 //jpaRepository를 이용하여 값을 가져오는 것
 
-
+    Optional<Transaction> findByTransactionId(String transactionId);
 }
