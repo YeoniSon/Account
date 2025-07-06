@@ -47,7 +47,7 @@ public class AccountController { //3layers 아키텍처로 외부에서 controll
     public List<AccountInfo> getAccountsByUserId(
             @RequestParam("user_id") Long userId
     ) {
-        return accountService.getAccountByUserId(userId)
+        return accountService.getAccountsByUserId(userId)
                 .stream().map(accountDto ->
                         AccountInfo.builder()
                         .accountNumber(accountDto.getAccountNumber())
