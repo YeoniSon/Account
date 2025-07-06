@@ -2,6 +2,7 @@ package com.example.account.controller;
 
 import com.example.account.domain.Account;
 import com.example.account.dto.CreateAccount;
+import com.example.account.dto.DeleteAccount;
 import com.example.account.service.AccountService;
 import com.example.account.service.RedisTestService;
 import jakarta.validation.Valid;
@@ -22,6 +23,18 @@ public class AccountController { //3layers 아키텍처로 외부에서 controll
                 accountService.createAccount(
                         request.getUserId(),
                         request.getInitialBalance()
+                )
+        );
+    }
+
+    @DeleteMapping("/account")
+    public DeleteAccount.Response deleteAccount(
+            @RequestBody @Valid DeleteAccount.Request request
+    ) {
+        return DeleteAccount.Response.from(
+                accountService.deleteAccount(
+                        request.getUserId(),
+                        request.getAccountNumber()
                 )
         );
     }

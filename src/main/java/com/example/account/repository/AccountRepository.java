@@ -15,4 +15,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Integer countByAccountUser(AccountUser accountUser); // accountUser가 여러개를 받을 수 있어서 가능
 
+    Optional<Account> findByAccountNumber(String AccountNumber);
 }
