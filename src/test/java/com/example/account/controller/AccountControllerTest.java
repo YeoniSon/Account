@@ -6,7 +6,6 @@ import com.example.account.dto.CreateAccount;
 import com.example.account.dto.DeleteAccount;
 import com.example.account.exception.AccountException;
 import com.example.account.service.AccountService;
-import com.example.account.service.RedisTestService;
 import com.example.account.type.AccountStatus;
 import com.example.account.type.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,9 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccountControllerTest {
     @MockitoBean
     private AccountService accountService;
-
-    @MockitoBean //원하는 동작으로 동작 하도록 함
-    private RedisTestService redisTestService;
 
     @Autowired
     private MockMvc mockMvc;

@@ -5,7 +5,6 @@ import com.example.account.dto.AccountInfo;
 import com.example.account.dto.CreateAccount;
 import com.example.account.dto.DeleteAccount;
 import com.example.account.service.AccountService;
-import com.example.account.service.RedisTestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountController { //3layers 아키텍처로 외부에서 controller만 접속 가능
     private final AccountService accountService;
-    private final RedisTestService redisTestService;
 
     @PostMapping("/account")
     public CreateAccount.Response createAccount(
@@ -50,15 +48,10 @@ public class AccountController { //3layers 아키텍처로 외부에서 controll
         return accountService.getAccountsByUserId(userId)
                 .stream().map(accountDto ->
                         AccountInfo.builder()
-                        .accountNumber(accountDto.getAccountNumber())
-                        .balance(accountDto.getBalance())
-                        .build())
+                                .accountNumber(accountDto.getAccountNumber())
+                                .balance(accountDto.getBalance())
+                                .build())
                 .collect(Collectors.toList());
-    }
-
-    @GetMapping("/get-lock")
-    public String getLock() {
-        return redisTestService.getLock();
     }
 
     @GetMapping("/account/{id}")
