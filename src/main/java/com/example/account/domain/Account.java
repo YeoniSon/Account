@@ -11,18 +11,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+//@EntityListeners(AuditingEntityListener.class) //createdDate, LastModifiedDate를 자동 저장할수 있도록
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // 객체 생성
 @Entity //설정이라고 생각하면 됨
-@EntityListeners(AuditingEntityListener.class) //createdDate, LastModifiedDate를 자동 저장할수 있도록
-public class Account {
-    @Id
-    @GeneratedValue
-    private Long id; //pk
-
+public class Account extends BaseEntity{
     @ManyToOne
     private AccountUser accountUser;
     private String accountNumber;
@@ -33,12 +29,6 @@ public class Account {
 
     private LocalDateTime registeredAt;
     private LocalDateTime unRegisteredAt;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     //위험할 수 있으므로 여기서 작성 하는 것이 더 안전함
     public void useBalance(Long amount) {
