@@ -20,7 +20,7 @@ public class CancelBalance {
     @AllArgsConstructor
     public static class Request{
         @NotBlank
-        private Long transactionId;
+        private String transactionId;
 
         @NotBlank
         @Size(min = 10, max = 10)
